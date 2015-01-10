@@ -88,6 +88,17 @@ public class AppOpsService extends IAppOpsService.Stub {
     final Looper mLooper;
     final boolean mStrictEnable;
     AppOpsPolicy mPolicy;
+<<<<<<< HEAD
+=======
+
+    private static final int[] PRIVACY_GUARD_OP_STATES = new int[] {
+        AppOpsManager.OP_COARSE_LOCATION,
+        AppOpsManager.OP_READ_CALL_LOG,
+        AppOpsManager.OP_READ_CONTACTS,
+        AppOpsManager.OP_READ_CALENDAR,
+        AppOpsManager.OP_READ_SMS
+    };
+>>>>>>> aokp/lollipop
 
     boolean mWriteScheduled;
     final Runnable mWriteRunner = new Runnable() {
@@ -1082,6 +1093,20 @@ public class AppOpsService extends IAppOpsService.Stub {
             if (tagName.equals("op")) {
                 int code = Integer
                         .parseInt(parser.getAttributeValue(null, "n"));
+<<<<<<< HEAD
+=======
+                // use op name string if it exists
+                String codeNameStr = parser.getAttributeValue(null, "ns");
+                if (codeNameStr != null) {
+                    // returns OP_NONE if it could not be mapped
+                    code = AppOpsManager.nameToOp(codeNameStr);
+                }
+                // skip op codes that are out of bounds
+                if (code == AppOpsManager.OP_NONE
+                        || code >= AppOpsManager._NUM_OP) {
+                    continue;
+                }
+>>>>>>> aokp/lollipop
                 Op op = new Op(uid, pkgName, code, AppOpsManager.MODE_ERRORED);
                 String mode = parser.getAttributeValue(null, "m");
                 if (mode != null) {
@@ -1174,6 +1199,10 @@ public class AppOpsService extends IAppOpsService.Stub {
                             AppOpsManager.OpEntry op = ops.get(j);
                             out.startTag(null, "op");
                             out.attribute(null, "n", Integer.toString(op.getOp()));
+<<<<<<< HEAD
+=======
+                            out.attribute(null, "ns", AppOpsManager.opToName(op.getOp()));
+>>>>>>> aokp/lollipop
                             int defaultMode = getDefaultMode(op.getOp(),
                                     pkg.getUid(), pkg.getPackageName());
                             if (op.getMode() != defaultMode) {
@@ -1371,9 +1400,71 @@ public class AppOpsService extends IAppOpsService.Stub {
         if (uid != Process.SYSTEM_UID) {
             throw new SecurityException(function
                     + " must by called by the system");
+<<<<<<< HEAD
+=======
         }
     }
 
+    final class AskRunnable implements Runnable {
+        final int code;
+        final int uid;
+        final String packageName;
+        final Op op;
+        final PermissionDialogReq request;
+
+        public AskRunnable(int code, int uid, String packageName, Op op,
+                PermissionDialogReq request) {
+            super();
+            this.code = code;
+            this.uid = uid;
+            this.packageName = packageName;
+            this.op = op;
+            this.request = request;
+>>>>>>> aokp/lollipop
+        }
+
+        @Override
+        public void run() {
+            synchronized (AppOpsService.this) {
+                Log.e(TAG, "Creating dialog box");
+                op.dialogReqQueue.register(request);
+                if (op.dialogReqQueue.getDialog() == null) {
+                    Dialog d = new PermissionDialog(mContext,
+                            AppOpsService.this, code, uid, packageName);
+                    op.dialogReqQueue.setDialog((PermissionDialog)d);
+                    d.show();
+                }
+            }
+        }
+    }
+
+    private PermissionDialogReq askOperationLocked(int code, int uid,
+            String packageName, Op op) {
+        PermissionDialogReq request = new PermissionDialogReq();
+        mHandler.post(new AskRunnable(code, uid, packageName, op, request));
+        return request;
+    }
+
+    private int getDefaultMode(int code, int uid, String packageName) {
+        int mode = AppOpsManager.opToDefaultMode(code,
+                isStrict(code, uid, packageName));
+        if (AppOpsManager.isStrictOp(code) && mPolicy != null) {
+            int policyMode = mPolicy.getDefualtMode(code, packageName);
+            if (policyMode != AppOpsManager.MODE_ERRORED) {
+                mode = policyMode;
+            }
+        }
+        return mode;
+    }
+
+    private boolean isStrict(int code, int uid, String packageName) {
+        if (!mStrictEnable)
+            return false;
+
+        return UserHandle.isApp(uid);
+    }
+
+<<<<<<< HEAD
     final class AskRunnable implements Runnable {
         final int code;
         final int uid;
@@ -1432,6 +1523,8 @@ public class AppOpsService extends IAppOpsService.Stub {
         return UserHandle.isApp(uid);
     }
 
+=======
+>>>>>>> aokp/lollipop
     private void printOperationLocked(Op op, int mode, String operation) {
         if(op != null) {
             int switchCode = AppOpsManager.opToSwitch(op.op);
@@ -1554,4 +1647,28 @@ public class AppOpsService extends IAppOpsService.Stub {
         }
         return isShow;
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public boolean getPrivacyGuardSettingForPackage(int uid, String packageName) {
+        for (int op : PRIVACY_GUARD_OP_STATES) {
+            int switchOp = AppOpsManager.opToSwitch(op);
+            int mode = checkOperation(op, uid, packageName);
+            if (mode != AppOpsManager.MODE_ALLOWED && mode != AppOpsManager.MODE_IGNORED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void setPrivacyGuardSettingForPackage(int uid, String packageName, boolean state) {
+        for (int op : PRIVACY_GUARD_OP_STATES) {
+            int switchOp = AppOpsManager.opToSwitch(op);
+            setMode(switchOp, uid, packageName, state
+                    ? AppOpsManager.MODE_ASK : AppOpsManager.MODE_ALLOWED);
+        }
+    }
+>>>>>>> aokp/lollipop
 }

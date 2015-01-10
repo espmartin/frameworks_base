@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
+<<<<<<< HEAD
 /* Copyright (c) 2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013, The Linux Foundation. All rights reserved.
+>>>>>>> aokp/lollipop
 ** Not a Contribution.
 **
 ** Copyright 2012, The Android Open Source Project
@@ -350,9 +354,12 @@
   <java-symbol type="bool" name="set_wifi_hotspot_security_none" />
   <java-symbol type="bool" name="config_radio_reset_on_regular_deactivation" />
 
+<<<<<<< HEAD
   <java-symbol type="bool" name="config_feature_iwlan_enabled" />
   <java-symbol type="bool" name="def_telephony_spn_spec_enabled" />
 
+=======
+>>>>>>> aokp/lollipop
   <java-symbol type="integer" name="config_bluetooth_max_advertisers" />
   <java-symbol type="integer" name="config_bluetooth_max_scan_filters" />
   <java-symbol type="integer" name="config_cursorWindowSize" />
@@ -1437,6 +1444,8 @@
   <java-symbol type="array" name="config_safeModeDisabledVibePattern" />
   <java-symbol type="array" name="config_safeModeEnabledVibePattern" />
   <java-symbol type="array" name="config_virtualKeyVibePattern" />
+  <java-symbol type="array" name="shutdown_reboot_options" />
+  <java-symbol type="array" name="shutdown_reboot_actions" />
   <java-symbol type="attr" name="actionModePopupWindowStyle" />
   <java-symbol type="attr" name="dialogCustomTitleDecorLayout" />
   <java-symbol type="attr" name="dialogTitleDecorLayout" />
@@ -1509,11 +1518,13 @@
   <java-symbol type="integer" name="config_carDockRotation" />
   <java-symbol type="integer" name="config_defaultUiModeType" />
   <java-symbol type="integer" name="config_deskDockRotation" />
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
   <java-symbol type="integer" name="config_doubleTapOnHomeBehavior" />
   <java-symbol type="integer" name="config_lidKeyboardAccessibility" />
   <java-symbol type="integer" name="config_lidNavigationAccessibility" />
   <java-symbol type="integer" name="config_lidOpenRotation" />
   <java-symbol type="integer" name="config_longPressOnHomeBehavior" />
+  <java-symbol type="integer" name="config_longPressOnMenuBehavior" />
   <java-symbol type="layout" name="global_actions_item" />
   <java-symbol type="layout" name="global_actions_silent_mode" />
   <java-symbol type="layout" name="recent_apps_dialog" />
@@ -1804,6 +1815,14 @@
   <java-symbol type="string" name="config_defaultNetworkScorerPackageName" />
   <java-symbol type="string" name="config_persistentDataPackageName" />
 
+  <!-- Profiles -->
+  <java-symbol type="xml" name="profile_default" />
+  <java-symbol type="string" name="wildcardProfile" />
+  <java-symbol type="string" name="profile_picker_title" />
+  <java-symbol type="string" name="profile_none" />
+  <java-symbol type="string" name="global_action_choose_profile" />
+  <java-symbol type="drawable" name="ic_lock_profile" />
+
   <java-symbol type="layout" name="resolver_list" />
   <java-symbol type="id" name="resolver_list" />
   <java-symbol type="id" name="button_once" />
@@ -1981,6 +2000,10 @@
   <java-symbol type="layout" name="year_label_text_view" />
   <java-symbol type="layout" name="date_picker_holo" />
 
+  <!-- Config.xml entries -->
+  <java-symbol type="string" name="config_deviceKeyHandlerLib" />
+  <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+
   <java-symbol type="id" name="time_header" />
   <java-symbol type="id" name="hours" />
   <java-symbol type="id" name="minutes" />
@@ -2122,6 +2145,10 @@
   <java-symbol type="bool" name="config_switch_phone_on_voice_reg_state_change" />
   <java-symbol type="string" name="whichHomeApplicationNamed" />
   <java-symbol type="bool" name="config_sms_force_7bit_encoding" />
+<<<<<<< HEAD
+=======
+  <java-symbol type="array" name="config_sms_convert_destination_number_support" />
+>>>>>>> aokp/lollipop
   <java-symbol type="string" name="config_partial_segment_expire_age" />
   <java-symbol type="bool" name="config_global_phone_enabled" />
   <java-symbol type="bool" name="use_motion_accel" />
@@ -2129,6 +2156,7 @@
   <!-- sim refresh for dual mode card -->
   <java-symbol type="bool" name="config_sim_refresh_for_dual_mode_card" />
 
+<<<<<<< HEAD
   <!-- config 2G/3G/4G RAT strings for carriers -->
   <java-symbol type="string" name="config_rat_2g" />
   <java-symbol type="string" name="config_rat_3g" />
@@ -2149,6 +2177,8 @@
   <!-- Enabled ESN Tracker -->
   <java-symbol type="bool" name="config_telephony_ESN_Tracker_enabled" />
 
+=======
+>>>>>>> aokp/lollipop
   <!-- Data Connectivity Error Configurations -->
   <java-symbol type="bool" name="config_reject_ggsn_perm_failure" />
   <java-symbol type="bool" name="config_protocol_errors_perm_failure" />
@@ -2160,4 +2190,25 @@
   <java-symbol type="bool" name="config_softap_extention" />
 
   <java-symbol type="bool" name="config_enable_mms_with_mobile_data_off" />
+<<<<<<< HEAD
+=======
+
+  <java-symbol type="bool" name="config_wifiApFirmwareReload" />
+
+  <!-- EdgeGesture service -->
+  <java-symbol type="dimen" name="edge_gesture_trigger_distance" />
+  <java-symbol type="dimen" name="edge_gesture_perpendicular_distance" />
+  <java-symbol type="dimen" name="edge_gesture_trigger_thickness" />
+
+  <!-- Gesture Sensor -->
+  <java-symbol type="bool" name="config_enableGestureService" />
+
+  <!-- Privacy Guard -->
+  <java-symbol type="drawable" name="stat_notify_privacy_guard" />
+  <java-symbol type="string" name="privacy_guard_notification" />
+  <java-symbol type="string" name="privacy_guard_notification_detail" />
+  <java-symbol type="string" name="privacy_guard_dialog_title" />
+  <java-symbol type="string" name="privacy_guard_dialog_summary" />
+
+>>>>>>> aokp/lollipop
 </resources>

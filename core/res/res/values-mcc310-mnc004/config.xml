@@ -37,6 +37,12 @@
 
     <bool name="config_auto_attach_data_on_creation">false</bool>
 
+<<<<<<< HEAD
+=======
+    <string-array translatable="false" name="config_sms_convert_destination_number_support">
+        <item>true</item>
+    </string-array>
+>>>>>>> aokp/lollipop
     <!-- Configuration that determines if ACTIVATE_REJECT_GGSN is to be
          treated as a permanent error -->
     <bool name="config_reject_ggsn_perm_failure">false</bool>

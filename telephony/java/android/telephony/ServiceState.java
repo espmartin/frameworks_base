@@ -542,9 +542,12 @@ public class ServiceState implements Parcelable {
             case RIL_RADIO_TECHNOLOGY_TD_SCDMA:
                 rtString = "TD-SCDMA";
                 break;
+<<<<<<< HEAD
             case RIL_RADIO_TECHNOLOGY_IWLAN:
                 rtString = "IWLAN";
                 break;
+=======
+>>>>>>> aokp/lollipop
             default:
                 rtString = "Unexpected";
                 Rlog.w(LOG_TAG, "Unexpected radioTechnology=" + rt);
@@ -813,8 +816,11 @@ public class ServiceState implements Parcelable {
             return TelephonyManager.NETWORK_TYPE_GSM;
         case ServiceState.RIL_RADIO_TECHNOLOGY_TD_SCDMA:
             return TelephonyManager.NETWORK_TYPE_TD_SCDMA;
+<<<<<<< HEAD
         case ServiceState.RIL_RADIO_TECHNOLOGY_IWLAN:
             return TelephonyManager.NETWORK_TYPE_IWLAN;
+=======
+>>>>>>> aokp/lollipop
         default:
             return TelephonyManager.NETWORK_TYPE_UNKNOWN;
         }

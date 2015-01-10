@@ -241,9 +241,13 @@ public class AppOpsManager {
     /** @hide */
     public static final int OP_DELETE_CALL_LOG = 58;
     /** @hide */
+<<<<<<< HEAD
     public static final int OP_DATA_CONNECT_CHANGE = 59;
     /** @hide */
     public static final int _NUM_OP = 60;
+=======
+    public static final int _NUM_OP = 59;
+>>>>>>> aokp/lollipop
 
     /** Access to coarse location information. */
     public static final String OPSTR_COARSE_LOCATION =
@@ -370,8 +374,11 @@ public class AppOpsManager {
             "android:delete_contacts";
     private static final String OPSTR_DELETE_CALL_LOG =
             "android:delete_call_log";
+<<<<<<< HEAD
     private static final String OPSTR_DATA_CONNECT_CHANGE =
             "android:data_connect_change";
+=======
+>>>>>>> aokp/lollipop
 
     /**
      * This maps each operation to the operation that serves as the
@@ -441,7 +448,10 @@ public class AppOpsManager {
             OP_DELETE_MMS,
             OP_DELETE_CONTACTS,
             OP_DELETE_CALL_LOG,
+<<<<<<< HEAD
             OP_DATA_CONNECT_CHANGE,
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -508,7 +518,10 @@ public class AppOpsManager {
             null,
             null,
             null,
+<<<<<<< HEAD
             null,
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -575,7 +588,10 @@ public class AppOpsManager {
         OPSTR_DELETE_MMS,
         OPSTR_DELETE_CONTACTS,
         OPSTR_DELETE_CALL_LOG,
+<<<<<<< HEAD
         OPSTR_DATA_CONNECT_CHANGE,
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -642,7 +658,10 @@ public class AppOpsManager {
             "DELETE_MMS",
             "DELETE_CONTACTS",
             "DELETE_CALL_LOG",
+<<<<<<< HEAD
             "DATA_CONNECT_CHANGE",
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -709,7 +728,10 @@ public class AppOpsManager {
             android.Manifest.permission.WRITE_SMS,
             android.Manifest.permission.WRITE_CONTACTS,
             android.Manifest.permission.WRITE_CALL_LOG,
+<<<<<<< HEAD
             android.Manifest.permission.MODIFY_PHONE_STATE,
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -777,7 +799,10 @@ public class AppOpsManager {
             null, //DELETE_MMS
             null, //DELETE_CONTACTS
             null, //DELETE_CALL_LOG
+<<<<<<< HEAD
             null, //DATA_CONNECT_CHANGE
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -844,7 +869,10 @@ public class AppOpsManager {
             false, //DELETE_MMS
             false, //DELETE_CONTACTS
             false, //DELETE_CALL_LOG
+<<<<<<< HEAD
             false, //DATA_CONNECT_CHANGE
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -910,7 +938,10 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,
+<<<<<<< HEAD
             AppOpsManager.MODE_ALLOWED,
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -977,7 +1008,10 @@ public class AppOpsManager {
             AppOpsManager.MODE_ASK,     // OP_DELETE_MMS
             AppOpsManager.MODE_ASK,     // OP_DELETE_CONTACTS
             AppOpsManager.MODE_ASK,     // OP_DELETE_CALL_LOG
+<<<<<<< HEAD
             AppOpsManager.MODE_ASK,     // OP_DATA_CONNECT_CHANGE
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -1043,7 +1077,10 @@ public class AppOpsManager {
         true,     // OP_DELETE_MMS
         true,     // OP_DELETE_CONTACTS
         true,     // OP_DELETE_CALL_LOG
+<<<<<<< HEAD
         true,     // OP_DATA_CONNECT_CHANGE
+=======
+>>>>>>> aokp/lollipop
     };
 
     /**
@@ -1113,11 +1150,19 @@ public class AppOpsManager {
             false,     // OP_DELETE_MMS
             false,     // OP_DELETE_CONTACTS
             false,     // OP_DELETE_CALL_LOG
+<<<<<<< HEAD
             false,     // OP_DATA_CONNECT_CHANGE
+=======
+>>>>>>> aokp/lollipop
     };
 
     private static HashMap<String, Integer> sOpStrToOp = new HashMap<String, Integer>();
     private static HashMap<String, Integer> sOpStringToOp = new HashMap<String, Integer>();
+<<<<<<< HEAD
+=======
+
+    private static HashMap<String, Integer> sNameToOp = new HashMap<String, Integer>();
+>>>>>>> aokp/lollipop
 
     static {
         if (sOpToSwitch.length != _NUM_OP) {
@@ -1171,6 +1216,12 @@ public class AppOpsManager {
             if (sOpToOpString[i] != null) {
                 sOpStringToOp.put(sOpToOpString[i], i);
             }
+<<<<<<< HEAD
+=======
+        }
+        for (int i=0; i<_NUM_OP; i++) {
+            sNameToOp.put(sOpNames[i], i);
+>>>>>>> aokp/lollipop
         }
     }
 
@@ -1189,6 +1240,15 @@ public class AppOpsManager {
     public static String opToName(int op) {
         if (op == OP_NONE) return "NONE";
         return op < sOpNames.length ? sOpNames[op] : ("Unknown(" + op + ")");
+    }
+
+    /**
+     * Map a non-localized name for the operation back to the Op number
+     * @hide
+     */
+    public static int nameToOp(String name) {
+        Integer val = sNameToOp.get(name);
+        return val != null ? val : OP_NONE;
     }
 
     /**
@@ -1883,4 +1943,26 @@ public class AppOpsManager {
         }
         return isShow;
     }
+<<<<<<< HEAD
+=======
+
+    /** @hide */
+    public boolean getPrivacyGuardSettingForPackage(int uid, String packageName) {
+        try {
+            return mService.getPrivacyGuardSettingForPackage(uid, packageName);
+        } catch (RemoteException e) {
+        }
+        return false;
+    }
+
+    /** @hide */
+    public void setPrivacyGuardSettingForPackage(int uid, String packageName,
+            boolean state) {
+        try {
+            mService.setPrivacyGuardSettingForPackage(uid, packageName, state);
+        } catch (RemoteException e) {
+        }
+    }
+
+>>>>>>> aokp/lollipop
 }

@@ -235,6 +235,13 @@ public final class ActivityStackSupervisor implements DisplayListener {
     private PowerManager mPm;
 
     /**
+     * Is the privacy guard currently enabled? Shared between ActivityStacks
+     */
+    String mPrivacyGuardPackageName = null;
+
+    private PowerManager mPm;
+
+    /**
      * We don't want to allow the device to go to sleep while in the process
      * of launching an activity.  This is primarily to allow alarm intent
      * receivers to launch an activity and get that to run before the device

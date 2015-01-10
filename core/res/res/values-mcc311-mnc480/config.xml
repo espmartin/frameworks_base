@@ -50,6 +50,12 @@
         <item>"*86:+1MDN,"</item>
     </string-array>
 
+<<<<<<< HEAD
+=======
+    <string-array translatable="false" name="config_sms_convert_destination_number_support">
+        <item>true</item>
+    </string-array>
+>>>>>>> aokp/lollipop
     <!-- Configuration that determines if ACTIVATE_REJECT_GGSN is to be
          treated as a permanent error -->
     <bool name="config_reject_ggsn_perm_failure">false</bool>

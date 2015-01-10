@@ -103,7 +103,7 @@ final class Settings {
      * Note that care should be taken to make sure all database upgrades are
      * idempotent.
      */
-    private static final int CURRENT_DATABASE_VERSION = DatabaseVersion.SIGNATURE_END_ENTITY;
+    private static final int CURRENT_DATABASE_VERSION = DatabaseVersion.SIGNATURE_MALFORMED_RECOVER;
 
     /**
      * This class contains constants that can be referred to from upgrade code.
@@ -121,6 +121,14 @@ final class Settings {
          * just the signing certificate.
          */
         public static final int SIGNATURE_END_ENTITY = 2;
+
+        /**
+         * There was a window of time in
+         * {@link android.os.Build.VERSION_CODES#LOLLIPOP} where we persisted
+         * certificates after potentially mutating them. To switch back to the
+         * original untouched certificates, we need to force a collection pass.
+         */
+        public static final int SIGNATURE_MALFORMED_RECOVER = 3;
     }
 
     private static final boolean DEBUG_STOPPED = false;
@@ -138,6 +146,9 @@ final class Settings {
             "persistent-preferred-activities";
     static final String TAG_CROSS_PROFILE_INTENT_FILTERS =
             "crossProfile-intent-filters";
+
+    private static final String TAG_PROTECTED_COMPONENTS = "protected-components";
+    private static final String TAG_VISIBLE_COMPONENTS = "visible-components";
 
     private static final String ATTR_NAME = "name";
     private static final String ATTR_USER = "user";
@@ -561,7 +572,9 @@ final class Settings {
                                     true, // notLaunched
                                     false, // hidden
                                     null, null, null,
-                                    false // blockUninstall
+                                    false, // blockUninstall
+                                    null,
+                                    null
                                     );
                             writePackageRestrictionsLPr(user.id);
                         }
@@ -1068,7 +1081,9 @@ final class Settings {
                                 false,  // notLaunched
                                 false,  // hidden
                                 null, null, null,
-                                false // blockUninstall
+                                false, // blockUninstall
+                                null,
+                                null
                                 );
                     }
                     return;
@@ -1140,6 +1155,8 @@ final class Settings {
 
                     HashSet<String> enabledComponents = null;
                     HashSet<String> disabledComponents = null;
+                    HashSet<String> protectedComponents = null;
+                    HashSet<String> visibleComponents = null;
 
                     int packageDepth = parser.getDepth();
                     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT
@@ -1154,11 +1171,16 @@ final class Settings {
                             enabledComponents = readComponentsLPr(parser);
                         } else if (tagName.equals(TAG_DISABLED_COMPONENTS)) {
                             disabledComponents = readComponentsLPr(parser);
+                        } else if (tagName.equals(TAG_PROTECTED_COMPONENTS)) {
+                            protectedComponents = readComponentsLPr(parser);
+                        } else if (tagName.equals(TAG_VISIBLE_COMPONENTS)) {
+                            visibleComponents = readComponentsLPr(parser);
                         }
                     }
 
                     ps.setUserState(userId, enabled, installed, stopped, notLaunched, hidden,
-                            enabledCaller, enabledComponents, disabledComponents, blockUninstall);
+                            enabledCaller, enabledComponents, disabledComponents, blockUninstall,
+                            protectedComponents, visibleComponents);
                 } else if (tagName.equals("preferred-activities")) {
                     readPreferredActivitiesLPw(parser, userId);
                 } else if (tagName.equals(TAG_PERSISTENT_PREFERRED_ACTIVITIES)) {
@@ -1305,7 +1327,11 @@ final class Settings {
                                 && ustate.enabledComponents.size() > 0)
                         || (ustate.disabledComponents != null
                                 && ustate.disabledComponents.size() > 0)
-                        || ustate.blockUninstall) {
+                        || ustate.blockUninstall
+                        || (ustate.protectedComponents != null
+                                && ustate.protectedComponents.size() > 0)
+                        || (ustate.visibleComponents != null
+                                && ustate.visibleComponents.size() > 0)) {
                     serializer.startTag(null, TAG_PACKAGE);
                     serializer.attribute(null, ATTR_NAME, pkg.name);
                     if (DEBUG_MU) Log.i(TAG, "  pkg=" + pkg.name + ", state=" + ustate.enabled);
@@ -1352,6 +1378,26 @@ final class Settings {
                             serializer.endTag(null, TAG_ITEM);
                         }
                         serializer.endTag(null, TAG_DISABLED_COMPONENTS);
+                    }
+                    if (ustate.protectedComponents != null
+                            && ustate.protectedComponents.size() > 0) {
+                        serializer.startTag(null, TAG_PROTECTED_COMPONENTS);
+                        for (final String name : ustate.protectedComponents) {
+                            serializer.startTag(null, TAG_ITEM);
+                            serializer.attribute(null, ATTR_NAME, name);
+                            serializer.endTag(null, TAG_ITEM);
+                        }
+                        serializer.endTag(null, TAG_PROTECTED_COMPONENTS);
+                    }
+                    if (ustate.visibleComponents != null
+                            && ustate.visibleComponents.size() > 0) {
+                        serializer.startTag(null, TAG_VISIBLE_COMPONENTS);
+                        for (final String name : ustate.visibleComponents) {
+                            serializer.startTag(null, TAG_ITEM);
+                            serializer.attribute(null, ATTR_NAME, name);
+                            serializer.endTag(null, TAG_ITEM);
+                        }
+                        serializer.endTag(null, TAG_VISIBLE_COMPONENTS);
                     }
                     serializer.endTag(null, TAG_PACKAGE);
                 }

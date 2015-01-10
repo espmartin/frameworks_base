@@ -1140,6 +1140,7 @@ public class TelephonyManager {
     public static final int NETWORK_TYPE_GSM = 16;
     /** Current network is TD_SCDMA {@hide} */
     public static final int NETWORK_TYPE_TD_SCDMA = 17;
+<<<<<<< HEAD
     /** Current network is IWLAN {@hide} */
     public static final int NETWORK_TYPE_IWLAN = 18;
 
@@ -1174,6 +1175,9 @@ public class TelephonyManager {
         }
         return ratClassName;
     }
+=======
+
+>>>>>>> aokp/lollipop
 
     /**
      * @return the NETWORK_TYPE_xxxx for current data connection.
@@ -1426,9 +1430,13 @@ public class TelephonyManager {
             case NETWORK_TYPE_GSM:
                 return "GSM";
             case NETWORK_TYPE_TD_SCDMA:
+<<<<<<< HEAD
                 return "TD-SCDMA";
             case NETWORK_TYPE_IWLAN:
                 return "IWLAN";
+=======
+                return "TD_SCDMA";
+>>>>>>> aokp/lollipop
             default:
                 return "UNKNOWN";
         }

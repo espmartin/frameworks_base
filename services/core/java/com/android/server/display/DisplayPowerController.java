@@ -573,6 +573,10 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         if (state == Display.STATE_OFF) {
             brightness = PowerManager.BRIGHTNESS_OFF;
             mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightness);
+<<<<<<< HEAD
+=======
+            mLights.getLight(LightsManager.LIGHT_ID_KEYBOARD).setBrightness(brightness);
+>>>>>>> aokp/lollipop
         }
 
         // Use default brightness when dozing unless overridden.
@@ -580,6 +584,10 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 || state == Display.STATE_DOZE_SUSPEND)) {
             brightness = mScreenBrightnessDozeConfig;
             mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(PowerManager.BRIGHTNESS_OFF);
+<<<<<<< HEAD
+=======
+            mLights.getLight(LightsManager.LIGHT_ID_KEYBOARD).setBrightness(PowerManager.BRIGHTNESS_OFF);
+>>>>>>> aokp/lollipop
         }
 
 
